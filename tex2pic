@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-def latexify(
+def tex2pic(
         texequation,
         outfname = None,
         verbose = False,
@@ -65,7 +65,7 @@ if __name__ == '__main__':
     parser.add_argument('-d','--density',default=300,type=int,help='density for convert (300 is nice)')
     args = parser.parse_args()
 
-    latexify(
+    tex2pic(
             args.texequation,
             outfname=args.output,
             verbose=args.verbose,
