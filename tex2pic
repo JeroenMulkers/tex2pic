@@ -5,7 +5,8 @@ def tex2pic(
         outfname = None,
         verbose = False,
         density = 300,
-        fmt='pdf'):
+        fmt='pdf',
+        background=None):
 
     import subprocess
     import tempfile
@@ -23,8 +24,11 @@ def tex2pic(
     \end{document}
     """
 
-    # determine the format of the output
-    fmt = os.path.splitext(outfname)[1][1:] if outfname else fmt
+    # overwriting options if contradictions
+    if outfname:
+        fmt = os.path.splitext(outfname)[1][1:]
+    else:
+        verbose = 0
 
     # create temporary directory and filenames
     tmpdir = tempfile.mkdtemp()
@@ -51,8 +55,13 @@ def tex2pic(
         exit()
 
     # convert in tmpdir
-    if fmt in ['png','jpg','bmp']:
-        subprocess.check_call("convert -density %d %s %s"%(density,tmppdf,tmpout),shell=True)
+    bg = 'transparant'
+    if fmt in ['png','jpg','bmp','gif']:
+        if bg:
+            command = "convert -density %d %s -background %s -flatten %s" %(density,tmppdf,background,tmpout)
+        else:
+            command = "convert -density %d %s %s" %(density,tmppdf,tmpout)
+        subprocess.check_call(command,shell=True)
 
     # return the actual output
     if outfname:
@@ -69,10 +78,11 @@ if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('texequation')
-    parser.add_argument('-v','--verbose',action='count', help='print compilation output of pdflatex')
+    parser.add_argument('-v','--verbose',action='count', help='print compilation output of pdflatex if output not to stdout')
     parser.add_argument('-o','--output',help='the output file which will be generated')
     parser.add_argument('-f','--format',default='pdf',help='format of output (if --output not set)')
     parser.add_argument('-d','--density',default=300,type=int,help='density for convert (300 is nice)')
+    parser.add_argument('-b','--background',default=None,help='background color (default is transparant)')
     args = parser.parse_args()
 
     tex2pic(
@@ -80,4 +90,5 @@ if __name__ == '__main__':
             outfname=args.output,
             verbose=args.verbose,
             density=args.density,
-            fmt=args.format)
+            fmt=args.format,
+            background=args.background)
