@@ -4,9 +4,8 @@ def tex2pic(
         texequation,
         outfname = None,
         verbose = False,
-        density = 300,
         fmt='pdf',
-        background=None):
+        resolution=300):
 
     import subprocess
     import tempfile
@@ -55,13 +54,10 @@ def tex2pic(
         exit()
 
     # convert in tmpdir
-    bg = 'transparant'
-    if fmt in ['png','jpg','bmp','gif']:
-        if bg:
-            command = "convert -density %d %s -background %s -flatten %s" %(density,tmppdf,background,tmpout)
-        else:
-            command = "convert -density %d %s %s" %(density,tmppdf,tmpout)
-        subprocess.check_call(command,shell=True)
+    formats = {'jpg':'jpg','jpeg':'jpg','png':'png','tiff':'tiff','ppm':''}
+    if fmt in formats.keys():
+        convertcmd = "pdftoppm -r %d -%s %s > %s" %(resolution,formats[fmt],tmppdf,tmpout)
+        subprocess.check_call(convertcmd,shell=True)
 
     # return the actual output
     if outfname:
@@ -81,14 +77,11 @@ if __name__ == '__main__':
     parser.add_argument('-v','--verbose',action='count', help='print compilation output of pdflatex if output not to stdout')
     parser.add_argument('-o','--output',help='the output file which will be generated')
     parser.add_argument('-f','--format',default='pdf',help='format of output (if --output not set)')
-    parser.add_argument('-d','--density',default=300,type=int,help='density for convert (300 is nice)')
-    parser.add_argument('-b','--background',default=None,help='background color (default is transparant)')
+    parser.add_argument('-r','--resolution',default='300',type=int,help='resolution as in -r option of pdftoppm')
     args = parser.parse_args()
 
-    tex2pic(
-            args.texequation,
+    tex2pic(args.texequation,
             outfname=args.output,
             verbose=args.verbose,
-            density=args.density,
             fmt=args.format,
-            background=args.background)
+            resolution=args.resolution)
