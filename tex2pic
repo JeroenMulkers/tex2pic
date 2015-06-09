@@ -4,7 +4,8 @@ def tex2pic(
         texequation,
         outfname = None,
         verbose = False,
-        density = 300):
+        density = 300,
+        fmt='pdf'):
 
     import subprocess
     import tempfile
@@ -44,16 +45,22 @@ def tex2pic(
         print "Compilation failed. Run again with -v to detect errors in your formula."
         exit()
 
-    # create output
-    if not outfname:
-        with open(tmpoutfname,'r') as f:
-            print f.read()
+    # determine the output format
+    if outfname:
+        fmt = os.path.splitext(outfname)[1][1:]
+
+    tmpoutfnamef = os.path.join(tmpdir,"texeq."+fmt)
+
+    # create output in tmpdir
+    if fmt in ['png','jpg','bmp']:
+        subprocess.check_call("convert -density %d %s %s"%(density,tmpoutfname,tmpoutfnamef),shell=True)
+
+    # return the actual output
+    if outfname:
+        subprocess.check_call("cp %s %s"%(tmpoutfnamef,outfname),shell=True)
     else:
-        _,ext = os.path.splitext(outfname)
-        if ext == '.pdf':
-            subprocess.check_call("cp %s %s"%(tmpoutfname,outfname),shell=True)
-        elif ext in ['.png','.jpg','.bmp']:
-            subprocess.check_call("convert -density %d %s %s"%(density,tmpoutfname,outfname),shell=True)
+        with open(tmpoutfnamef,'r') as f:
+            print f.read()
 
 
 if __name__ == '__main__':
@@ -62,6 +69,7 @@ if __name__ == '__main__':
     parser.add_argument('texequation')
     parser.add_argument('-v','--verbose',action='count', help='print compilation output of pdflatex')
     parser.add_argument('-o','--output',help='the output file which will be generated')
+    parser.add_argument('-f','--format',default='pdf',help='format of output (if --output not set)')
     parser.add_argument('-d','--density',default=300,type=int,help='density for convert (300 is nice)')
     args = parser.parse_args()
 
@@ -69,4 +77,5 @@ if __name__ == '__main__':
             args.texequation,
             outfname=args.output,
             verbose=args.verbose,
-            density=args.density)
+            density=args.density,
+            fmt=args.format)
