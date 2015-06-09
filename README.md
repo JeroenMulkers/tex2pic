@@ -21,7 +21,7 @@ The resolution of the picture in this example is of course not good enough for a
 
 ```
 ./tex2pic -r 100 -o out.png "\sum_{k=1}^{\infty} \frac{k^2}{2k} = 6"
-'''
+```
 
 ![](https://github.com/JeroenMulkers/tex2pic/blob/master/examples/series_r100.png)
 
