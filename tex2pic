@@ -10,6 +10,7 @@ def tex2pic(
     import subprocess
     import tempfile
     import os
+    import shutil
 
     head = r"""% latex file create by sandbox.py
     \documentclass{standalone}
@@ -30,6 +31,7 @@ def tex2pic(
     tmptex = os.path.join(tmpdir,"texeq.tex")
     tmppdf = os.path.join(tmpdir,"texeq.pdf")
     tmpout = os.path.join(tmpdir,"texeq."+fmt)
+    print tmpdir
 
     # write the tmp texfile
     with open(tmptex,'w') as f:
@@ -59,6 +61,9 @@ def tex2pic(
     else:
         with open(tmpout,'r') as f:
             print f.read()
+
+    # remove tmp files
+    shutil.rmtree(tmpdir)
 
 
 if __name__ == '__main__':
