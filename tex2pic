@@ -22,20 +22,24 @@ def tex2pic(
     \end{document}
     """
 
-    # create temporary files/directories
+    # determine the format of the output
+    fmt = os.path.splitext(outfname)[1][1:] if outfname else fmt
+
+    # create temporary directory and filenames
     tmpdir = tempfile.mkdtemp()
-    tmptexfname = os.path.join(tmpdir,"texeq.tex")
-    tmpoutfname = os.path.join(tmpdir,"texeq.pdf")
+    tmptex = os.path.join(tmpdir,"texeq.tex")
+    tmppdf = os.path.join(tmpdir,"texeq.pdf")
+    tmpout = os.path.join(tmpdir,"texeq."+fmt)
 
     # write the tmp texfile
-    with open(tmptexfname,'w') as f:
+    with open(tmptex,'w') as f:
         f.write(head)
         f.write(texequation)
         f.write(foot)
 
     # compile the tex file in tmpdir
     stdout = None if verbose else open(os.devnull,'w')
-    popen = subprocess.Popen("pdflatex -interaction=nonstopmode -pdf %s"%tmptexfname,
+    popen = subprocess.Popen("pdflatex -interaction=nonstopmode -pdf %s"%tmptex,
                 shell=True,cwd=tmpdir,stdout=stdout,stderr=stdout)
     popen.wait()
     if not verbose: stdout.close()
@@ -45,21 +49,15 @@ def tex2pic(
         print "Compilation failed. Run again with -v to detect errors in your formula."
         exit()
 
-    # determine the output format
-    if outfname:
-        fmt = os.path.splitext(outfname)[1][1:]
-
-    tmpoutfnamef = os.path.join(tmpdir,"texeq."+fmt)
-
-    # create output in tmpdir
+    # convert in tmpdir
     if fmt in ['png','jpg','bmp']:
-        subprocess.check_call("convert -density %d %s %s"%(density,tmpoutfname,tmpoutfnamef),shell=True)
+        subprocess.check_call("convert -density %d %s %s"%(density,tmppdf,tmpout),shell=True)
 
     # return the actual output
     if outfname:
-        subprocess.check_call("cp %s %s"%(tmpoutfnamef,outfname),shell=True)
+        subprocess.check_call("cp %s %s"%(tmpout,outfname),shell=True)
     else:
-        with open(tmpoutfnamef,'r') as f:
+        with open(tmpout,'r') as f:
             print f.read()
 
 
