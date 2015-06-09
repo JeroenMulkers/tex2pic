@@ -34,13 +34,14 @@ def latexify(
 
     # compile the tex file in tmpdir
     stdout = None if verbose else open(os.devnull,'w')
-    popen = subprocess.Popen("pdflatex -pdf %s"%tmptexfname,shell=True,cwd=tmpdir,stdout=stdout,stderr=stdout)
+    popen = subprocess.Popen("pdflatex -interaction=nonstopmode -pdf %s"%tmptexfname,
+                shell=True,cwd=tmpdir,stdout=stdout,stderr=stdout)
     popen.wait()
     if not verbose: stdout.close()
 
     # exit if not compiled
     if popen.returncode != 0:
-        print "compilation failed"
+        print "Compilation failed. Run again with -v to detect errors in your formula."
         exit()
 
     # create output
