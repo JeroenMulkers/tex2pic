@@ -31,7 +31,6 @@ def tex2pic(
     tmptex = os.path.join(tmpdir,"texeq.tex")
     tmppdf = os.path.join(tmpdir,"texeq.pdf")
     tmpout = os.path.join(tmpdir,"texeq."+fmt)
-    print tmpdir
 
     # write the tmp texfile
     with open(tmptex,'w') as f:
@@ -57,7 +56,7 @@ def tex2pic(
 
     # return the actual output
     if outfname:
-        subprocess.check_call("cp %s %s"%(tmpout,outfname),shell=True)
+        shutil.copy(tmpout,outfname)
     else:
         with open(tmpout,'r') as f:
             print f.read()
