@@ -13,7 +13,7 @@ def tex2pic(
     import shutil
 
     head = r"""% latex file create by sandbox.py
-    \documentclass{standalone}
+    \documentclass[border=1pt]{standalone}
     \begin{document}
     $\displaystyle
     """
