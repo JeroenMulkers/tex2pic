@@ -28,12 +28,24 @@
         </ul>
       </header>
       <section>
-        <h1>
-<a id="tex2pic" class="anchor" href="#tex2pic" aria-hidden="true"><span class="octicon octicon-link"></span></a>TeX2pic</h1>
+        <h2>
+<a id="introduction" class="anchor" href="#introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction</h2>
 
 <p>Most academics are fluent in LaTeX since papers and reports are typically written in LaTeX. However, LaTeX is not always the best tool to create posters or presentations. It is often preferred to use powerpoint, illustrator, ... for these tasks. These programs do not have excellent equation editors. This is why images of formulas are often used in posters and presentations. These images are typically extracted from pdf documents created with LaTeX. This method can be very tedious.</p>
 
 <p>I present TeX2pic. TeX2pic is command line tool which converts a tex equation into an image in a very user friendly way. Let's dive into some examples.</p>
+
+<h2>
+<a id="prerequisites" class="anchor" href="#prerequisites" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prerequisites</h2>
+
+<ul>
+<li>Python (tested with version 2.7)</li>
+<li>pdftoppm</li>
+<li>pdflatex</li>
+</ul>
+
+<h2>
+<a id="examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
 
 <pre><code>./tex2pic -o einstein.png "E=mc^2"
 </code></pre>
@@ -56,15 +68,6 @@
 </code></pre>
 
 <p><img src="https://github.com/JeroenMulkers/tex2pic/blob/master/examples/series_r500.png" alt=""></p>
-
-<h2>
-<a id="prerequisites" class="anchor" href="#prerequisites" aria-hidden="true"><span class="octicon octicon-link"></span></a>Prerequisites</h2>
-
-<ul>
-<li>Python (tested with version 2.7)</li>
-<li>pdftoppm</li>
-<li>pdflatex</li>
-</ul>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/JeroenMulkers">JeroenMulkers</a></p>
