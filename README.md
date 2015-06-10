@@ -14,19 +14,19 @@ I present TeX2pic. TeX2pic is command line tool which converts a tex equation in
 The resolution of the picture in this example is of course not good enough for a poster. One can use the -r option to play with the resolution of the picture:
 
 ```
-./tex2pic -r 300 -o out.png "\sum_{k=1}^{\infty} \frac{k^2}{2k} = 6"
+./tex2pic -r 300 -o out.png "\sum_{k=1}^{\infty} \frac{k^2}{2^k} = 6"
 ```
 
 ![](https://github.com/JeroenMulkers/tex2pic/blob/master/examples/series_default.png)
 
 ```
-./tex2pic -r 100 -o out.png "\sum_{k=1}^{\infty} \frac{k^2}{2k} = 6"
+./tex2pic -r 100 -o out.png "\sum_{k=1}^{\infty} \frac{k^2}{2^k} = 6"
 ```
 
 ![](https://github.com/JeroenMulkers/tex2pic/blob/master/examples/series_r100.png)
 
 ```
-./tex2pic -r 500 -o out.png "\sum_{k=1}^{\infty} \frac{k^2}{2k} = 6"
+./tex2pic -r 500 -o out.png "\sum_{k=1}^{\infty} \frac{k^2}{2^k} = 6"
 ```
 
 ![](https://github.com/JeroenMulkers/tex2pic/blob/master/examples/series_r500.png)
