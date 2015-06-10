@@ -1,7 +1,7 @@
 TeX2pic
 =======
 
-Most academics are fluent in LaTeX since papers and reports are typically written in LaTeX. However, LaTeX is not always the best tool to create posters or presentations. It is often preferred to use powerpoint, illustrator for these tasks. These programs do not have excellent equation editors. This is why images of the formulas are often used in posters and presentations. These images are typically extracted from pdf documents created with LaTeX. This method can be very cumbersome.
+Most academics are fluent in LaTeX since papers and reports are typically written in LaTeX. However, LaTeX is not always the best tool to create posters or presentations. It is often preferred to use powerpoint, illustrator, ... for these tasks. These programs do not have excellent equation editors. This is why images of formulas are often used in posters and presentations. These images are typically extracted from pdf documents created with LaTeX. This method can be very tedious.
 
 I present TeX2pic. TeX2pic is command line tool which converts a tex equation into an image in a very user friendly way. Let's dive into some examples.
 
@@ -30,3 +30,11 @@ The resolution of the picture in this example is of course not good enough for a
 ```
 
 ![](https://github.com/JeroenMulkers/tex2pic/blob/master/examples/series_r500.png)
+
+Prerequisites
+-------------
+
+- Python (tested with version 2.7)
+- pdftoppm
+- pdflatex
+
