@@ -50,7 +50,7 @@ def tex2pic(
 
     # exit if not compiled
     if popen.returncode != 0:
-        print "Compilation failed. Run again with -v to detect errors in your formula."
+        print("Compilation failed. Run again with -v to detect errors in your formula.")
         exit()
 
     # convert in tmpdir
@@ -64,7 +64,7 @@ def tex2pic(
         shutil.copy(tmpout,outfname)
     else:
         with open(tmpout,'r') as f:
-            print f.read()
+            print(f.read())
 
     # remove tmp files
     shutil.rmtree(tmpdir)
